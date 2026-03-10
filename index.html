@@ -4,556 +4,305 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Southern California Roleplay</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #1b2028;
+      --bg-2: #161b22;
+      --nav: rgba(20, 24, 31, 0.88);
+      --nav-border: rgba(255, 255, 255, 0.08);
+      --text: #f3f6fb;
+      --muted: #b7c0cf;
+      --hover: rgba(255, 255, 255, 0.08);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Inter", sans-serif;
     }
 
-    :root {
-      --glass: rgba(255,255,255,0.10);
-      --glass-strong: rgba(255,255,255,0.14);
-      --glass-border: rgba(255,255,255,0.22);
-      --text: rgba(255,255,255,0.96);
-      --muted: rgba(255,255,255,0.75);
-      --blue1: #52afff;
-      --blue2: #0a73ff;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      background:
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       color: var(--text);
-      background: #0c1016;
+      min-height: 100vh;
     }
 
-    .scene {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .bg {
-      position: absolute;
-      inset: -2%;
-      background:
-        linear-gradient(rgba(9,13,18,.42), rgba(9,13,18,.58)),
-        url("background.png") center center / cover no-repeat;
-      transform: scale(1.03);
-      animation: bgDrift 18s ease-in-out infinite alternate;
-    }
-
-    .bg::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.04) 0%, rgba(255,255,255,0) 35%),
-        linear-gradient(to bottom, rgba(255,255,255,.02), rgba(0,0,0,.18));
-      pointer-events: none;
-    }
-
-    @keyframes bgDrift {
-      0%   { transform: scale(1.03) translate3d(0, 0, 0); }
-      100% { transform: scale(1.06) translate3d(-10px, -6px, 0); }
-    }
-
-    .vignette {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.02) 0%, rgba(0,0,0,.05) 35%, rgba(0,0,0,.34) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .navbar {
-      position: absolute;
-      top: 34px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 20;
-      display: flex;
-      gap: 34px;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 38px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.22);
-      backdrop-filter: blur(18px) saturate(130%);
-      -webkit-backdrop-filter: blur(18px) saturate(130%);
-      box-shadow: 0 18px 40px rgba(0,0,0,.22);
-    }
-
-    .navbar a {
-      color: rgba(255,255,255,.88);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      position: relative;
-      transition: color .18s ease, opacity .18s ease, text-shadow .18s ease;
-    }
-
-    .navbar a:hover {
-      color: #fff;
-      text-shadow: 0 0 12px rgba(255,255,255,.18);
-    }
-
-    .navbar a.active::after {
-      content: "";
-      position: absolute;
+    .site-header {
+      position: fixed;
+      top: 0;
       left: 0;
-      right: 0;
-      bottom: -8px;
-      height: 2px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.9);
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: var(--nav);
+      border-bottom: 1px solid var(--nav-border);
+      box-shadow: var(--shadow);
     }
 
-    .hero {
-      position: relative;
-      z-index: 10;
-      width: min(930px, 90vw);
-      min-height: 450px;
-      padding: 54px 48px 36px;
-      border-radius: 26px;
-      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.09));
-      border: 1px solid rgba(255,255,255,.24);
-      backdrop-filter: blur(22px) saturate(135%);
-      -webkit-backdrop-filter: blur(22px) saturate(135%);
-      box-shadow: 0 40px 90px rgba(0,0,0,.42);
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 24% 24%, rgba(255,255,255,.08), transparent 25%),
-        linear-gradient(135deg, rgba(255,255,255,.05), transparent 40%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 1px;
-      border-radius: 25px;
-      border: 1px solid rgba(255,255,255,.07);
-      pointer-events: none;
-    }
-
-    .light-sweep-blue,
-    .light-sweep-red {
-      position: absolute;
-      inset: auto;
-      border-radius: 999px;
-      filter: blur(60px);
-      pointer-events: none;
-      z-index: 1;
-      mix-blend-mode: screen;
-    }
-
-    .light-sweep-blue {
-      width: 240px;
-      height: 120px;
-      left: -40px;
-      bottom: 16px;
-      background: rgba(29, 125, 255, .34);
-      animation: blueSweep 6s ease-in-out infinite;
-    }
-
-    .light-sweep-red {
-      width: 180px;
-      height: 110px;
-      right: 120px;
-      bottom: 12px;
-      background: rgba(255, 68, 68, .22);
-      animation: redSweep 7s ease-in-out infinite;
-    }
-
-    @keyframes blueSweep {
-      0%, 100% { transform: translateX(0) translateY(0); opacity: .20; }
-      50% { transform: translateX(80px) translateY(-8px); opacity: .32; }
-    }
-
-    @keyframes redSweep {
-      0%, 100% { transform: translateX(0) translateY(0); opacity: .14; }
-      50% { transform: translateX(-70px) translateY(-10px); opacity: .24; }
-    }
-
-    .tech-lines-left,
-    .tech-lines-right,
-    .tech-lines-bottom {
-      position: absolute;
-      pointer-events: none;
-      z-index: 2;
-      opacity: .28;
-    }
-
-    .tech-lines-left {
-      left: -130px;
-      bottom: 34px;
-      width: 370px;
-      height: 220px;
-      animation: floatLines 7s ease-in-out infinite alternate;
-    }
-
-    .tech-lines-right {
-      right: -70px;
-      bottom: 46px;
-      width: 320px;
-      height: 180px;
-      animation: floatLines 8s ease-in-out infinite alternate;
-    }
-
-    .tech-lines-bottom {
-      left: 170px;
-      bottom: -16px;
-      width: 360px;
-      height: 140px;
-      opacity: .20;
-      animation: floatLines 9s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatLines {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-6px); }
-    }
-
-    .server-logo {
-      position: absolute;
-      right: 52px;
-      top: 42px;
-      width: 120px;
-      height: auto;
-      z-index: 4;
-      opacity: .98;
-      filter: drop-shadow(0 0 18px rgba(255,255,255,.22));
-      animation: logoFloat 5s ease-in-out infinite;
-    }
-
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
-    }
-
-    .content {
-      position: relative;
-      z-index: 5;
+    .nav-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      height: 82px;
+      padding: 0 22px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 355px;
-    }
-
-    h1 {
-      max-width: 600px;
-      font-size: clamp(58px, 6.9vw, 86px);
-      line-height: .92;
-      font-weight: 900;
-      letter-spacing: -.055em;
-      text-transform: uppercase;
-    }
-
-    .subtitle {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: clamp(16px, 1.8vw, 22px);
-      letter-spacing: -.02em;
-      text-transform: uppercase;
-    }
-
-    .bottom-row {
-      margin-top: 34px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-
-    .cta {
-      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-width: 210px;
-      height: 64px;
-      padding: 0 34px;
-      border-radius: 16px;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
       text-decoration: none;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .02em;
-      background: linear-gradient(180deg, var(--blue1), var(--blue2));
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.15) inset,
-        0 14px 36px rgba(10,115,255,.42),
-        0 0 24px rgba(82,175,255,.20);
-      transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+      color: var(--text);
     }
 
-    .cta:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.04);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.2) inset,
-        0 18px 42px rgba(10,115,255,.5),
-        0 0 30px rgba(82,175,255,.28);
-    }
-
-    .cta:active {
-      transform: translateY(1px) scale(.99);
-    }
-
-    .departments {
-      display: flex;
-      gap: 22px;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      max-width: 560px;
-    }
-
-    .dept {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      min-width: 66px;
-      text-align: center;
-      transition: transform .18s ease, filter .18s ease;
-      cursor: default;
-    }
-
-    .dept:hover {
-      transform: translateY(-2px);
-    }
-
-    .dept img,
-    .dept .civ-icon {
-      width: 40px;
-      height: 40px;
+    .brand-logo {
+      width: 46px;
+      height: 46px;
       object-fit: contain;
-      filter: drop-shadow(0 0 10px rgba(255,255,255,.16));
-      transition: transform .18s ease, filter .18s ease;
+      display: block;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.08));
     }
 
-    .dept:hover img,
-    .dept:hover .civ-icon {
-      transform: scale(1.06);
-      filter:
-        drop-shadow(0 0 12px rgba(255,255,255,.20))
-        drop-shadow(0 0 18px rgba(82,175,255,.16));
+    .brand-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
 
-    .dept span {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      color: rgba(255,255,255,.88);
-      text-transform: uppercase;
+    .brand-name {
+      font-family: "Sora", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
       white-space: nowrap;
     }
 
-    .civ-icon {
-      color: #d5d9de;
+    .brand-tagline {
+      font-family: "Sora", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
     }
 
-    @media (max-width: 900px) {
-      .hero {
-        width: min(920px, calc(100vw - 28px));
-        padding: 40px 28px 28px;
-      }
-
-      .server-logo {
-        right: 28px;
-        top: 30px;
-        width: 96px;
-      }
-
-      .navbar {
-        gap: 20px;
-        padding: 14px 22px;
-      }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    @media (max-width: 720px) {
-      body {
-        overflow: auto;
-      }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+    }
 
-      .scene {
-        min-height: 100vh;
+    .nav-link:hover {
+      background: var(--hover);
+      transform: translateY(-1px);
+    }
+
+    .nav-link svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      opacity: 0.95;
+    }
+
+    .page {
+      padding-top: 82px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 82px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .hero-inner {
+      max-width: 1320px;
+      width: 100%;
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 20px;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .section {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      min-height: 320px;
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .nav-wrap {
         height: auto;
-        padding: 88px 12px 24px;
-      }
-
-      .navbar {
-        top: 16px;
-        width: calc(100vw - 24px);
-        gap: 14px;
-        padding: 14px 16px;
-        flex-wrap: wrap;
-      }
-
-      .navbar a {
-        font-size: 12px;
-      }
-
-      .hero {
-        width: 100%;
-        min-height: auto;
-        padding: 30px 20px 24px;
-        border-radius: 20px;
-      }
-
-      .hero::after {
-        border-radius: 19px;
-      }
-
-      .server-logo {
-        right: 18px;
-        top: 18px;
-        width: 82px;
-      }
-
-      h1 {
-        font-size: clamp(42px, 11vw, 58px);
-        max-width: 100%;
-      }
-
-      .subtitle {
-        font-size: 15px;
-        line-height: 1.4;
-      }
-
-      .bottom-row {
+        min-height: 82px;
+        padding-top: 14px;
+        padding-bottom: 14px;
         flex-direction: column;
         align-items: flex-start;
-        gap: 24px;
       }
 
-      .departments {
+      .nav-links {
+        width: 100%;
         justify-content: flex-start;
-        gap: 18px;
       }
 
-      .tech-lines-left,
-      .tech-lines-right,
-      .tech-lines-bottom {
-        display: none;
+      .page {
+        padding-top: 122px;
+      }
+
+      .hero {
+        min-height: calc(100vh - 122px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .brand-text {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+
+      .brand-name,
+      .brand-tagline {
+        font-size: 0.95rem;
+      }
+
+      .nav-link {
+        padding: 10px 13px;
+        font-size: 0.92rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="scene">
-    <div class="bg"></div>
-    <div class="vignette"></div>
-
-    <nav class="navbar">
-      <a href="#" class="active">Home</a>
-      <a href="#departments">Departments</a>
-      <a href="#apply">Apply</a>
-      <a href="#discord">Discord</a>
-    </nav>
-
-    <section class="hero">
-      <div class="light-sweep-blue"></div>
-      <div class="light-sweep-red"></div>
-
-      <svg class="tech-lines-left" viewBox="0 0 370 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M4 192C82 119 120 117 164 155C206 191 250 196 365 84" stroke="rgba(255,255,255,0.38)" stroke-width="1.2"/>
-        <path d="M8 205C72 133 112 131 156 167C201 202 248 207 366 98" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
-        <path d="M2 176C89 107 128 105 172 141C215 177 257 181 365 69" stroke="rgba(80,150,255,0.22)" stroke-width="1"/>
-      </svg>
-
-      <svg class="tech-lines-right" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M0 122C66 102 96 78 137 53C182 26 232 33 320 0" stroke="rgba(255,90,90,0.52)" stroke-width="1.2"/>
-        <path d="M18 171C80 146 118 121 151 89C177 61 220 37 296 10" stroke="rgba(90,160,255,0.28)" stroke-width="1"/>
-      </svg>
-
-      <svg class="tech-lines-bottom" viewBox="0 0 360 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M10 120C70 60 120 28 172 16C228 5 278 20 340 72" stroke="rgba(255,255,255,0.32)" stroke-width="1"/>
-        <path d="M35 131C90 82 132 55 183 42C232 30 274 42 326 87" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-      </svg>
-
-      <img src="logo.png" class="server-logo" alt="SCRP Logo">
-
-      <div class="content">
-        <div>
-          <h1>
-            SOUTHERN<br>
-            CALIFORNIA<br>
-            ROLEPLAY
-          </h1>
-
-          <div class="subtitle">
-            ULTRA-REALISTIC. IMMERSIVE. SPEC ROLEPLAY.
-          </div>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="#home" class="brand">
+        <img src="logo.png" alt="SCRP Logo" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-name">SCRP</div>
+          <div class="brand-tagline">As Spec As It Gets.</div>
         </div>
+      </a>
 
-        <div class="bottom-row">
-          <a href="#apply" class="cta">Apply Now</a>
+      <nav class="nav-links">
+        <a href="#home" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 10.5L12 3L21 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 9.5V20H18V9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Home</span>
+        </a>
 
-          <div class="departments" id="departments">
-            <div class="dept">
-              <img src="lapd-logo.png" alt="LAPD logo">
-              <span>LAPD</span>
-            </div>
+        <a href="#about" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9.2 9A3 3 0 1 1 15 10C15 12 12 12.2 12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="18" r="1" fill="currentColor"/>
+            <path d="M12 22C17.5 22 22 17.5 22 12S17.5 2 12 2 2 6.5 2 12 6.5 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>About Us</span>
+        </a>
 
-            <div class="dept">
-              <img src="lasd-logo.png" alt="LASD logo">
-              <span>LASD</span>
-            </div>
+        <a href="#departments" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M5 21V8L12 4L19 8V21" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 21V14H15V21" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span>Departments</span>
+        </a>
 
-            <div class="dept">
-              <img src="chp-logo.png" alt="CHP logo">
-              <span>CHP</span>
-            </div>
+        <a href="#discord" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M8 17C9.2 18 10.5 18.5 12 18.5C13.5 18.5 14.8 18 16 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9" cy="11.5" r="1.1" fill="currentColor"/>
+            <circle cx="15" cy="11.5" r="1.1" fill="currentColor"/>
+            <path d="M7 6.8C8.8 5.8 10.4 5.4 12 5.4C13.6 5.4 15.2 5.8 17 6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7.5 17.5L6 19C4.2 17.5 3 14.9 3 12C3 9.1 4.2 6.5 6 5L7.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 17.5L18 19C19.8 17.5 21 14.9 21 12C21 9.1 19.8 6.5 18 5L16.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Discord</span>
+        </a>
+      </nav>
+    </div>
+  </header>
 
-            <div class="dept">
-              <img src="lafd-logo.png" alt="LAFD logo">
-              <span>LAFD</span>
-            </div>
-
-            <div class="dept">
-              <svg class="civ-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M5 14L6.4 9.7C6.8 8.5 7.9 7.7 9.1 7.7H14.9C16.1 7.7 17.2 8.5 17.6 9.7L19 14M7 14H17M8.2 16.8H9.2M14.8 16.8H15.8M7.6 18.5C6.7 18.5 6 17.8 6 16.9V13.9C6 13 6.7 12.3 7.6 12.3H16.4C17.3 12.3 18 13 18 13.9V16.9C18 17.8 17.3 18.5 16.4 18.5H7.6Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>CIVILIAN</span>
-            </div>
-          </div>
-        </div>
-      </div>
+  <main class="page">
+    <section id="home" class="hero">
+      <div class="hero-inner">Landing page base ready.</div>
     </section>
-  </div>
+
+    <section id="about" class="section">
+      <div class="section-card">About Us section placeholder</div>
+    </section>
+
+    <section id="departments" class="section">
+      <div class="section-card">Departments section placeholder</div>
+    </section>
+
+    <section id="discord" class="section">
+      <div class="section-card">Discord section placeholder</div>
+    </section>
+  </main>
 
   <script>
-    const links = document.querySelectorAll(".navbar a");
-    links.forEach(link => {
-      link.addEventListener("click", () => {
-        links.forEach(l => l.classList.remove("active"));
-        link.classList.add("active");
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
       });
     });
   </script>
