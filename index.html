@@ -1,299 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Southern California Roleplay</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
-body{
-
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:
-linear-gradient(rgba(10,14,20,.5),rgba(10,14,20,.65)),
-url("background.png") center/cover no-repeat;
-
-color:white;
-overflow:hidden;
-}
-
-/* NAV BAR */
-
-.navbar{
-
-position:absolute;
-top:35px;
-left:50%;
-transform:translateX(-50%);
-
-display:flex;
-gap:35px;
-
-padding:16px 40px;
-
-border-radius:18px;
-
-background:rgba(255,255,255,.12);
-border:1px solid rgba(255,255,255,.25);
-
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-
-box-shadow:0 20px 40px rgba(0,0,0,.25);
-
-}
-
-.navbar a{
-
-text-decoration:none;
-color:rgba(255,255,255,.9);
-
-font-weight:600;
-font-size:14px;
-letter-spacing:.08em;
-
-text-transform:uppercase;
-
-}
-
-/* HERO CARD */
-
-.hero{
-
-width:900px;
-max-width:90%;
-
-padding:60px;
-
-border-radius:26px;
-
-background:rgba(255,255,255,.12);
-border:1px solid rgba(255,255,255,.25);
-
-backdrop-filter:blur(20px);
--webkit-backdrop-filter:blur(20px);
-
-box-shadow:0 40px 80px rgba(0,0,0,.45);
-
-position:relative;
-
-}
-
-/* SERVER LOGO */
-
-.server-logo{
-
-position:absolute;
-
-right:40px;
-top:40px;
-
-width:120px;
-
-opacity:.95;
-
-filter:drop-shadow(0 0 15px rgba(255,255,255,.25));
-
-}
-
-/* TITLE */
-
-h1{
-
-font-size:72px;
-font-weight:800;
-
-line-height:.9;
-letter-spacing:-.03em;
-
-text-transform:uppercase;
-
-}
-
-/* SUBTITLE */
-
-.subtitle{
-
-margin-top:20px;
-
-font-size:18px;
-
-letter-spacing:.04em;
-
-color:rgba(255,255,255,.75);
-
-}
-
-/* APPLY BUTTON */
-
-.cta{
-
-display:inline-block;
-
-margin-top:40px;
-
-padding:18px 40px;
-
-border-radius:14px;
-
-background:linear-gradient(#4da7ff,#0a73ff);
-
-text-decoration:none;
-font-weight:700;
-
-box-shadow:0 12px 30px rgba(0,120,255,.55);
-
-}
-
-/* DEPARTMENT STRIP */
-
-.departments{
-
-position:absolute;
-
-bottom:30px;
-right:40px;
-
-display:flex;
-gap:30px;
-
-}
-
-/* INDIVIDUAL DEPARTMENT */
-
-.dept{
-
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-
-font-size:12px;
-
-letter-spacing:.08em;
-
-text-transform:uppercase;
-
-color:rgba(255,255,255,.9);
-
-}
-
-/* LOGOS */
-
-.dept img{
-
-width:36px;
-height:36px;
-object-fit:contain;
-
-filter:drop-shadow(0 0 8px rgba(255,255,255,.3));
-
-}
-
-/* CIVILIAN ICON */
-
-.civ{
-
-width:36px;
-height:36px;
-
-stroke:#d5d9de;
-stroke-width:2;
-fill:none;
-
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Southern California Roleplay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    :root {
+      --glass: rgba(255,255,255,0.10);
+      --glass-strong: rgba(255,255,255,0.14);
+      --glass-border: rgba(255,255,255,0.22);
+      --text: rgba(255,255,255,0.96);
+      --muted: rgba(255,255,255,0.75);
+      --blue1: #52afff;
+      --blue2: #0a73ff;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      overflow: hidden;
+      color: var(--text);
+      background: #0c1016;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg {
+      position: absolute;
+      inset: -2%;
+      background:
+        linear-gradient(rgba(9,13,18,.42), rgba(9,13,18,.58)),
+        url("background.png") center center / cover no-repeat;
+      transform: scale(1.03);
+      animation: bgDrift 18s ease-in-out infinite alternate;
+    }
+
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,.04) 0%, rgba(255,255,255,0) 35%),
+        linear-gradient(to bottom, rgba(255,255,255,.02), rgba(0,0,0,.18));
+      pointer-events: none;
+    }
+
+    @keyframes bgDrift {
+      0%   { transform: scale(1.03) translate3d(0, 0, 0); }
+      100% { transform: scale(1.06) translate3d(-10px, -6px, 0); }
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,.02) 0%, rgba(0,0,0,.05) 35%, rgba(0,0,0,.34) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .navbar {
+      position: absolute;
+      top: 34px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      gap: 34px;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 38px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(18px) saturate(130%);
+      -webkit-backdrop-filter: blur(18px) saturate(130%);
+      box-shadow: 0 18px 40px rgba(0,0,0,.22);
+    }
+
+    .navbar a {
+      color: rgba(255,255,255,.88);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      position: relative;
+      transition: color .18s ease, opacity .18s ease, text-shadow .18s ease;
+    }
+
+    .navbar a:hover {
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255,255,255,.18);
+    }
+
+    .navbar a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.9);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 10;
+      width: min(930px, 90vw);
+      min-height: 450px;
+      padding: 54px 48px 36px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.09));
+      border: 1px solid rgba(255,255,255,.24);
+      backdrop-filter: blur(22px) saturate(135%);
+      -webkit-backdrop-filter: blur(22px) saturate(135%);
+      box-shadow: 0 40px 90px rgba(0,0,0,.42);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 24% 24%, rgba(255,255,255,.08), transparent 25%),
+        linear-gradient(135deg, rgba(255,255,255,.05), transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,.07);
+      pointer-events: none;
+    }
+
+    .light-sweep-blue,
+    .light-sweep-red {
+      position: absolute;
+      inset: auto;
+      border-radius: 999px;
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: screen;
+    }
+
+    .light-sweep-blue {
+      width: 240px;
+      height: 120px;
+      left: -40px;
+      bottom: 16px;
+      background: rgba(29, 125, 255, .34);
+      animation: blueSweep 6s ease-in-out infinite;
+    }
+
+    .light-sweep-red {
+      width: 180px;
+      height: 110px;
+      right: 120px;
+      bottom: 12px;
+      background: rgba(255, 68, 68, .22);
+      animation: redSweep 7s ease-in-out infinite;
+    }
+
+    @keyframes blueSweep {
+      0%, 100% { transform: translateX(0) translateY(0); opacity: .20; }
+      50% { transform: translateX(80px) translateY(-8px); opacity: .32; }
+    }
+
+    @keyframes redSweep {
+      0%, 100% { transform: translateX(0) translateY(0); opacity: .14; }
+      50% { transform: translateX(-70px) translateY(-10px); opacity: .24; }
+    }
+
+    .tech-lines-left,
+    .tech-lines-right,
+    .tech-lines-bottom {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+      opacity: .28;
+    }
+
+    .tech-lines-left {
+      left: -130px;
+      bottom: 34px;
+      width: 370px;
+      height: 220px;
+      animation: floatLines 7s ease-in-out infinite alternate;
+    }
+
+    .tech-lines-right {
+      right: -70px;
+      bottom: 46px;
+      width: 320px;
+      height: 180px;
+      animation: floatLines 8s ease-in-out infinite alternate;
+    }
+
+    .tech-lines-bottom {
+      left: 170px;
+      bottom: -16px;
+      width: 360px;
+      height: 140px;
+      opacity: .20;
+      animation: floatLines 9s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatLines {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-6px); }
+    }
+
+    .server-logo {
+      position: absolute;
+      right: 52px;
+      top: 42px;
+      width: 120px;
+      height: auto;
+      z-index: 4;
+      opacity: .98;
+      filter: drop-shadow(0 0 18px rgba(255,255,255,.22));
+      animation: logoFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .content {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 355px;
+    }
+
+    h1 {
+      max-width: 600px;
+      font-size: clamp(58px, 6.9vw, 86px);
+      line-height: .92;
+      font-weight: 900;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: clamp(16px, 1.8vw, 22px);
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+    }
+
+    .bottom-row {
+      margin-top: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 210px;
+      height: 64px;
+      padding: 0 34px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      background: linear-gradient(180deg, var(--blue1), var(--blue2));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.15) inset,
+        0 14px 36px rgba(10,115,255,.42),
+        0 0 24px rgba(82,175,255,.20);
+      transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.2) inset,
+        0 18px 42px rgba(10,115,255,.5),
+        0 0 30px rgba(82,175,255,.28);
+    }
+
+    .cta:active {
+      transform: translateY(1px) scale(.99);
+    }
+
+    .departments {
+      display: flex;
+      gap: 22px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 560px;
+    }
+
+    .dept {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 66px;
+      text-align: center;
+      transition: transform .18s ease, filter .18s ease;
+      cursor: default;
+    }
+
+    .dept:hover {
+      transform: translateY(-2px);
+    }
+
+    .dept img,
+    .dept .civ-icon {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,.16));
+      transition: transform .18s ease, filter .18s ease;
+    }
+
+    .dept:hover img,
+    .dept:hover .civ-icon {
+      transform: scale(1.06);
+      filter:
+        drop-shadow(0 0 12px rgba(255,255,255,.20))
+        drop-shadow(0 0 18px rgba(82,175,255,.16));
+    }
+
+    .dept span {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: rgba(255,255,255,.88);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .civ-icon {
+      color: #d5d9de;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        width: min(920px, calc(100vw - 28px));
+        padding: 40px 28px 28px;
+      }
+
+      .server-logo {
+        right: 28px;
+        top: 30px;
+        width: 96px;
+      }
+
+      .navbar {
+        gap: 20px;
+        padding: 14px 22px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        overflow: auto;
+      }
+
+      .scene {
+        min-height: 100vh;
+        height: auto;
+        padding: 88px 12px 24px;
+      }
+
+      .navbar {
+        top: 16px;
+        width: calc(100vw - 24px);
+        gap: 14px;
+        padding: 14px 16px;
+        flex-wrap: wrap;
+      }
+
+      .navbar a {
+        font-size: 12px;
+      }
+
+      .hero {
+        width: 100%;
+        min-height: auto;
+        padding: 30px 20px 24px;
+        border-radius: 20px;
+      }
+
+      .hero::after {
+        border-radius: 19px;
+      }
+
+      .server-logo {
+        right: 18px;
+        top: 18px;
+        width: 82px;
+      }
+
+      h1 {
+        font-size: clamp(42px, 11vw, 58px);
+        max-width: 100%;
+      }
+
+      .subtitle {
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      .departments {
+        justify-content: flex-start;
+        gap: 18px;
+      }
+
+      .tech-lines-left,
+      .tech-lines-right,
+      .tech-lines-bottom {
+        display: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="scene">
+    <div class="bg"></div>
+    <div class="vignette"></div>
 
-<div class="navbar">
+    <nav class="navbar">
+      <a href="#" class="active">Home</a>
+      <a href="#departments">Departments</a>
+      <a href="#apply">Apply</a>
+      <a href="#discord">Discord</a>
+    </nav>
 
-<a href="#">Home</a>
-<a href="#">Departments</a>
-<a href="#">Apply</a>
-<a href="#">Discord</a>
+    <section class="hero">
+      <div class="light-sweep-blue"></div>
+      <div class="light-sweep-red"></div>
 
-</div>
+      <svg class="tech-lines-left" viewBox="0 0 370 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4 192C82 119 120 117 164 155C206 191 250 196 365 84" stroke="rgba(255,255,255,0.38)" stroke-width="1.2"/>
+        <path d="M8 205C72 133 112 131 156 167C201 202 248 207 366 98" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+        <path d="M2 176C89 107 128 105 172 141C215 177 257 181 365 69" stroke="rgba(80,150,255,0.22)" stroke-width="1"/>
+      </svg>
 
+      <svg class="tech-lines-right" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M0 122C66 102 96 78 137 53C182 26 232 33 320 0" stroke="rgba(255,90,90,0.52)" stroke-width="1.2"/>
+        <path d="M18 171C80 146 118 121 151 89C177 61 220 37 296 10" stroke="rgba(90,160,255,0.28)" stroke-width="1"/>
+      </svg>
 
-<div class="hero">
+      <svg class="tech-lines-bottom" viewBox="0 0 360 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M10 120C70 60 120 28 172 16C228 5 278 20 340 72" stroke="rgba(255,255,255,0.32)" stroke-width="1"/>
+        <path d="M35 131C90 82 132 55 183 42C232 30 274 42 326 87" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      </svg>
 
-<img src="logo.png" class="server-logo">
+      <img src="logo.png" class="server-logo" alt="SCRP Logo">
 
-<h1>
+      <div class="content">
+        <div>
+          <h1>
+            SOUTHERN<br>
+            CALIFORNIA<br>
+            ROLEPLAY
+          </h1>
 
-Southern<br>
-California<br>
-Roleplay
+          <div class="subtitle">
+            ULTRA-REALISTIC. IMMERSIVE. SPEC ROLEPLAY.
+          </div>
+        </div>
 
-</h1>
+        <div class="bottom-row">
+          <a href="#apply" class="cta">Apply Now</a>
 
-<div class="subtitle">
+          <div class="departments" id="departments">
+            <div class="dept">
+              <img src="lapd-logo.png" alt="LAPD logo">
+              <span>LAPD</span>
+            </div>
 
-ULTRA-REALISTIC. IMMERSIVE. SPEC ROLEPLAY.
+            <div class="dept">
+              <img src="lasd-logo.png" alt="LASD logo">
+              <span>LASD</span>
+            </div>
 
-</div>
+            <div class="dept">
+              <img src="chp-logo.png" alt="CHP logo">
+              <span>CHP</span>
+            </div>
 
-<a class="cta" href="#">APPLY NOW</a>
+            <div class="dept">
+              <img src="lafd-logo.png" alt="LAFD logo">
+              <span>LAFD</span>
+            </div>
 
+            <div class="dept">
+              <svg class="civ-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 14L6.4 9.7C6.8 8.5 7.9 7.7 9.1 7.7H14.9C16.1 7.7 17.2 8.5 17.6 9.7L19 14M7 14H17M8.2 16.8H9.2M14.8 16.8H15.8M7.6 18.5C6.7 18.5 6 17.8 6 16.9V13.9C6 13 6.7 12.3 7.6 12.3H16.4C17.3 12.3 18 13 18 13.9V16.9C18 17.8 17.3 18.5 16.4 18.5H7.6Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>CIVILIAN</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
-<div class="departments">
-
-<div class="dept">
-<img src="lapd-logo.png">
-LAPD
-</div>
-
-<div class="dept">
-<img src="lasd-logo.png">
-LASD
-</div>
-
-<div class="dept">
-<img src="chp-logo.png">
-CHP
-</div>
-
-<div class="dept">
-<img src="lafd-logo.png">
-LAFD
-</div>
-
-<div class="dept">
-
-<svg class="civ" viewBox="0 0 24 24">
-
-<rect x="4" y="10" width="16" height="6" rx="2"/>
-<circle cx="7" cy="17" r="2"/>
-<circle cx="17" cy="17" r="2"/>
-
-</svg>
-
-CIVILIAN
-
-</div>
-
-</div>
-
-</div>
-
+  <script>
+    const links = document.querySelectorAll(".navbar a");
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        links.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+  </script>
 </body>
 </html>
