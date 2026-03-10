@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Southern California Roleplay</title>
+  <style>
+    :root {
+      --bg: #0f141a;
+      --panel: rgba(255, 255, 255, 0.10);
+      --panel-border: rgba(255, 255, 255, 0.22);
+      --text: rgba(255, 255, 255, 0.96);
+      --muted: rgba(255, 255, 255, 0.72);
+      --nav: rgba(255, 255, 255, 0.82);
+      --blue: #0b7cff;
+      --blue-2: #49a4ff;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #111;
+      overflow: hidden;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(12, 16, 22, 0.42), rgba(12, 16, 22, 0.58)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80") center center / cover no-repeat;
+    }
+
+    /* soft cinematic blur / vignette */
+    .vignette {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.04) 35%, rgba(0,0,0,0.30) 100%),
+        linear-gradient(to bottom, rgba(255,255,255,0.03), rgba(0,0,0,0.15));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 44px;
+    }
+
+    .nav {
+      position: absolute;
+      top: 34px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      z-index: 5;
+      user-select: none;
+    }
+
+    .nav a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--nav);
+      text-transform: uppercase;
+      opacity: 0.95;
+      position: relative;
+      transition: opacity 0.18s ease, color 0.18s ease;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+      color: white;
+    }
+
+    .nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 2px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 999px;
+    }
+
+    .hero-wrap {
+      width: min(980px, calc(100vw - 120px));
+      margin-top: 110px;
+      position: relative;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 470px;
+      padding: 52px 54px 42px;
+      border-radius: 22px;
+      border: 1px solid var(--panel-border);
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.14),
+        rgba(255,255,255,0.08)
+      );
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 34%, rgba(255,255,255,0.09), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 21px;
+      border: 1px solid rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 375px;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 560px;
+      font-size: clamp(54px, 7vw, 82px);
+      line-height: 0.92;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+    }
+
+    .subtext {
+      margin-top: 26px;
+      font-size: clamp(17px, 2vw, 24px);
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.78);
+      text-transform: uppercase;
+    }
+
+    .cta-row {
+      margin-top: 38px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .cta {
+      appearance: none;
+      border: none;
+      outline: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 218px;
+      height: 68px;
+      padding: 0 34px;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: white;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, var(--blue-2), var(--blue));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.18) inset,
+        0 14px 36px rgba(11, 124, 255, 0.35),
+        0 0 30px rgba(62, 156, 255, 0.24);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      cursor: pointer;
+    }
+
+    .cta:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.22) inset,
+        0 16px 40px rgba(11, 124, 255, 0.42),
+        0 0 38px rgba(62, 156, 255, 0.34);
+    }
+
+    .cta:active {
+      transform: translateY(1px) scale(0.99);
+    }
+
+    .dept-icons {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding-right: 6px;
+      padding-bottom: 2px;
+    }
+
+    .dept-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 54px;
+    }
+
+    .dept-item span {
+      font-size: 14px;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+      display: block;
+      opacity: 0.98;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.08));
+    }
+
+    .icon.blue { color: #46a2ff; }
+    .icon.red { color: #ff5a61; }
+    .icon.gray { color: #d8dde5; }
+
+    /* decorative line overlays */
+    .line-left,
+    .line-right,
+    .line-bottom,
+    .line-hex {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.38;
+    }
+
+    .line-left {
+      left: -150px;
+      bottom: 30px;
+      width: 360px;
+      height: 250px;
+    }
+
+    .line-right {
+      right: -60px;
+      bottom: 40px;
+      width: 290px;
+      height: 180px;
+    }
+
+    .line-bottom {
+      left: 210px;
+      bottom: -26px;
+      width: 330px;
+      height: 140px;
+      opacity: 0.26;
+    }
+
+    .line-hex {
+      right: 72px;
+      top: 56px;
+      width: 250px;
+      height: 180px;
+      opacity: 0.28;
+    }
+
+    /* subtle city blur layer inside card */
+    .city-blur {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(20,24,29,0.08), rgba(20,24,29,0.18)),
+        radial-gradient(circle at 50% 38%, rgba(255,255,255,0.08), transparent 35%);
+      filter: blur(0.2px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-wrap {
+        width: min(900px, calc(100vw - 70px));
+      }
+
+      .hero-card {
+        min-height: 440px;
+        padding: 42px 40px 34px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      body {
+        overflow: auto;
+      }
+
+      .page {
+        height: auto;
+        min-height: 100vh;
+        padding: 26px 18px 40px;
+      }
+
+      .nav {
+        top: 22px;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: calc(100% - 36px);
+      }
+
+      .nav a {
+        font-size: 12px;
+      }
+
+      .hero-wrap {
+        width: 100%;
+        margin-top: 86px;
+      }
+
+      .hero-card {
+        min-height: auto;
+        padding: 34px 24px 28px;
+        border-radius: 18px;
+      }
+
+      h1 {
+        max-width: 100%;
+        font-size: clamp(40px, 11vw, 60px);
+      }
+
+      .subtext {
+        font-size: 16px;
+        line-height: 1.35;
+      }
+
+      .cta-row {
+        margin-top: 28px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .dept-icons {
+        gap: 20px;
+        padding-right: 0;
+      }
+
+      .line-left,
+      .line-right,
+      .line-bottom,
+      .line-hex {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vignette"></div>
+
+  <main class="page">
+    <nav class="nav">
+      <a href="#" class="active">Home</a>
+      <a href="#departments">Departments</a>
+      <a href="#apply">Apply</a>
+      <a href="#discord">Discord</a>
+    </nav>
+
+    <section class="hero-wrap">
+      <svg class="line-left" viewBox="0 0 360 250" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M5 210C80 130 120 128 165 168C210 208 254 212 355 95" stroke="rgba(255,255,255,0.45)" stroke-width="1.3"/>
+        <path d="M5 198C84 122 123 120 168 160C213 200 257 205 355 89" stroke="rgba(255,255,255,0.26)" stroke-width="1"/>
+        <path d="M3 222C74 141 116 139 160 178C204 217 250 223 354 105" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+      </svg>
+
+      <svg class="line-right" viewBox="0 0 290 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M0 118C58 106 92 76 136 52C191 21 234 30 290 0" stroke="rgba(255,80,100,0.55)" stroke-width="1.5"/>
+        <path d="M18 168C80 142 118 121 149 86C173 58 213 37 266 12" stroke="rgba(90,160,255,0.34)" stroke-width="1"/>
+      </svg>
+
+      <svg class="line-bottom" viewBox="0 0 330 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M10 120C65 60 115 28 165 16C225 1 274 20 320 70" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+        <path d="M35 132C84 78 125 50 173 39C226 27 266 43 307 84" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+        <path d="M58 136C108 90 142 68 184 58C229 47 261 58 292 92" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+      </svg>
+
+      <svg class="line-hex" viewBox="0 0 250 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M130 10L210 50V128L130 168L50 128V50L130 10Z" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        <path d="M130 26L194 58V120L130 152L66 120V58L130 26Z" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      </svg>
+
+      <div class="hero-card">
+        <div class="city-blur"></div>
+
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Southern California Roleplay</div>
+            <h1>
+              SOUTHERN<br>
+              CALIFORNIA<br>
+              ROLEPLAY
+            </h1>
+
+            <div class="subtext">
+              ULTRA-REALISTIC. IMMERSIVE. SPEC ROLEPLAY.
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <a class="cta" href="#apply">Apply Now</a>
+
+            <div class="dept-icons" id="departments">
+              <div class="dept-item">
+                <svg class="icon blue" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2L19 5V10C19 15 15.8 18.7 12 20C8.2 18.7 5 15 5 10V5L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                <span>Police</span>
+              </div>
+
+              <div class="dept-item">
+                <svg class="icon red" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12.2 3C14.5 5.7 18 8.8 18 13C18 16.6 15.3 19 12 19C8.7 19 6 16.6 6 13C6 10.7 7.1 8.9 8.5 7.2C9.8 8.6 11 9.5 12.3 10.1C11.7 8.3 11.5 6.2 12.2 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                <span>Fire</span>
+              </div>
+
+              <div class="dept-item">
+                <svg class="icon gray" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5 14L6.4 9.7C6.8 8.5 7.9 7.7 9.1 7.7H14.9C16.1 7.7 17.2 8.5 17.6 9.7L19 14M7 14H17M8.2 16.8H9.2M14.8 16.8H15.8M7.6 18.5C6.7 18.5 6 17.8 6 16.9V13.9C6 13 6.7 12.3 7.6 12.3H16.4C17.3 12.3 18 13 18 13.9V16.9C18 17.8 17.3 18.5 16.4 18.5H7.6Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Civilian</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav a');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
