@@ -1,191 +1,596 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Southern California Roleplay</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Southern California Roleplay</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Inter",sans-serif;
-}
+    :root{
+      --white: rgba(255,255,255,0.96);
+      --white-soft: rgba(255,255,255,0.78);
+      --white-faint: rgba(255,255,255,0.62);
+      --glass: rgba(255,255,255,0.10);
+      --glass-strong: rgba(255,255,255,0.14);
+      --glass-border: rgba(255,255,255,0.20);
+      --glass-border-soft: rgba(255,255,255,0.10);
+      --shadow: 0 30px 80px rgba(0,0,0,0.42);
+      --blue-1: #49a7ff;
+      --blue-2: #0b7cff;
+      --lapd: #46a5ff;
+      --lasd: #4fb46a;
+      --chp: #d4b14a;
+      --lafd: #ff5b64;
+      --civ: #d7dbe0;
+    }
 
-body{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-background:
-linear-gradient(rgba(15,18,22,.6),rgba(15,18,22,.7)),
-url("https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2000") center/cover no-repeat;
-color:white;
-overflow:hidden;
-}
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.nav{
-position:absolute;
-top:40px;
-display:flex;
-gap:40px;
-font-weight:600;
-font-size:14px;
-letter-spacing:.08em;
-text-transform:uppercase;
-}
+    html, body{
+      width: 100%;
+      height: 100%;
+    }
 
-.nav a{
-color:rgba(255,255,255,.8);
-text-decoration:none;
-position:relative;
-}
+    body{
+      font-family: "Inter", sans-serif;
+      color: var(--white);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(7,10,16,0.30) 0%, rgba(8,10,15,0.46) 100%),
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 38%),
+        url("background.png") center center / cover no-repeat;
+      position: relative;
+    }
 
-.nav a:hover{
-color:white;
-}
+    .page{
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
 
-.nav a.active::after{
-content:"";
-position:absolute;
-bottom:-8px;
-left:0;
-width:100%;
-height:2px;
-background:white;
-opacity:.9;
-}
+    .global-vignette{
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.04) 30%, rgba(0,0,0,0.24) 100%),
+        linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(0,0,0,0.10));
+      z-index: 0;
+    }
 
-.hero{
-width:900px;
-max-width:90%;
-padding:60px;
-border-radius:22px;
-background:rgba(255,255,255,.1);
-border:1px solid rgba(255,255,255,.2);
-backdrop-filter:blur(18px);
-box-shadow:0 40px 80px rgba(0,0,0,.45);
-position:relative;
-}
+    .nav-shell{
+      position: absolute;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      width: min(640px, calc(100vw - 40px));
+      border-radius: 18px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(14px) saturate(130%);
+      -webkit-backdrop-filter: blur(14px) saturate(130%);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+    }
 
-h1{
-font-size:70px;
-font-weight:800;
-line-height:.9;
-letter-spacing:-.03em;
-}
+    .nav-shell::before{
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 17px;
+      border: 1px solid rgba(255,255,255,0.07);
+      pointer-events: none;
+    }
 
-.subtitle{
-margin-top:20px;
-color:rgba(255,255,255,.7);
-letter-spacing:.05em;
-}
+    .nav{
+      width: 100%;
+      min-height: 58px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      padding: 0 16px;
+    }
 
-.cta{
-margin-top:40px;
-display:inline-block;
-padding:18px 40px;
-border-radius:14px;
-background:linear-gradient(#4da7ff,#0a73ff);
-font-weight:700;
-text-decoration:none;
-box-shadow:0 10px 30px rgba(0,120,255,.5);
-transition:.15s;
-}
+    .nav a{
+      text-decoration: none;
+      color: rgba(255,255,255,0.82);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.18s ease, opacity 0.18s ease;
+      white-space: nowrap;
+    }
 
-.cta:hover{
-transform:translateY(-2px);
-box-shadow:0 16px 40px rgba(0,120,255,.6);
-}
+    .nav a:hover{
+      color: rgba(255,255,255,1);
+    }
 
-.roles{
-position:absolute;
-bottom:30px;
-right:40px;
-display:flex;
-gap:28px;
-font-size:14px;
-color:rgba(255,255,255,.8);
-}
+    .nav a.active::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -9px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+    }
 
-.role{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-}
+    .hero-wrap{
+      position: relative;
+      z-index: 10;
+      width: min(980px, calc(100vw - 110px));
+      margin-top: 132px;
+    }
 
-.icon{
-width:24px;
-height:24px;
-}
+    .hero-card{
+      position: relative;
+      min-height: 520px;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.08) 100%);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: var(--shadow);
+      padding: 56px 56px 42px 56px;
+    }
 
-.icon.police{color:#4da7ff;}
-.icon.fire{color:#ff4a55;}
-.icon.civ{color:#ddd;}
+    .hero-card::before{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 30%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.00) 24%),
+        linear-gradient(130deg, rgba(255,255,255,0.05), rgba(255,255,255,0.00) 40%);
+      pointer-events: none;
+    }
 
-svg{
-stroke:currentColor;
-stroke-width:2;
-fill:none;
-}
-</style>
+    .hero-card::after{
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 25px;
+      border: 1px solid var(--glass-border-soft);
+      pointer-events: none;
+    }
+
+    .inner-blur{
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(18,23,31,0.02), rgba(18,23,31,0.14)),
+        radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 48%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .tech-left,
+    .tech-right,
+    .tech-bottom,
+    .tech-hex{
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.34;
+    }
+
+    .tech-left{
+      left: -135px;
+      bottom: 42px;
+      width: 360px;
+      height: 220px;
+    }
+
+    .tech-right{
+      right: -70px;
+      bottom: 48px;
+      width: 320px;
+      height: 180px;
+      opacity: 0.28;
+    }
+
+    .tech-bottom{
+      left: 180px;
+      bottom: -18px;
+      width: 360px;
+      height: 140px;
+      opacity: 0.22;
+    }
+
+    .tech-hex{
+      right: 70px;
+      top: 36px;
+      width: 260px;
+      height: 190px;
+      opacity: 0.24;
+    }
+
+    .hero-content{
+      position: relative;
+      z-index: 5;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .headline{
+      max-width: 600px;
+    }
+
+    .headline h1{
+      font-size: clamp(58px, 7vw, 88px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+
+    .subtitle{
+      margin-top: 24px;
+      font-size: clamp(16px, 1.75vw, 24px);
+      color: var(--white-soft);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .bottom-row{
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+
+    .apply-btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 228px;
+      height: 70px;
+      padding: 0 34px;
+      text-decoration: none;
+      color: #fff;
+      border-radius: 16px;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      background: linear-gradient(180deg, var(--blue-1), var(--blue-2));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.16) inset,
+        0 14px 40px rgba(10,115,255,0.42),
+        0 0 26px rgba(73,167,255,0.22);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    }
+
+    .apply-btn:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.22) inset,
+        0 16px 44px rgba(10,115,255,0.48),
+        0 0 34px rgba(73,167,255,0.32);
+    }
+
+    .apply-btn:active{
+      transform: translateY(1px) scale(0.99);
+    }
+
+    .dept-strip{
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 22px;
+      flex-wrap: wrap;
+      max-width: 560px;
+      padding-right: 2px;
+    }
+
+    .dept-item{
+      min-width: 68px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      text-align: center;
+    }
+
+    .dept-logo{
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.10));
+    }
+
+    .dept-label{
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.86);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .civ-icon{
+      width: 42px;
+      height: 42px;
+      display: block;
+      color: var(--civ);
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.08));
+    }
+
+    .ambient-blue,
+    .ambient-red{
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(55px);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.24;
+    }
+
+    .ambient-blue{
+      width: 220px;
+      height: 120px;
+      left: 48px;
+      bottom: 38px;
+      background: rgba(46, 140, 255, 0.34);
+    }
+
+    .ambient-red{
+      width: 180px;
+      height: 110px;
+      right: 200px;
+      bottom: 24px;
+      background: rgba(255, 70, 70, 0.22);
+    }
+
+    @media (max-width: 980px){
+      .hero-wrap{
+        width: min(920px, calc(100vw - 44px));
+        margin-top: 118px;
+      }
+
+      .hero-card{
+        padding: 44px 34px 34px 34px;
+        min-height: 500px;
+      }
+
+      .nav{
+        gap: 22px;
+      }
+    }
+
+    @media (max-width: 760px){
+      body{
+        overflow: auto;
+      }
+
+      .page{
+        min-height: 100vh;
+        height: auto;
+        padding-bottom: 32px;
+      }
+
+      .nav-shell{
+        top: 18px;
+        width: calc(100vw - 24px);
+      }
+
+      .nav{
+        gap: 14px;
+        min-height: 54px;
+        flex-wrap: wrap;
+        padding: 10px 12px;
+      }
+
+      .nav a{
+        font-size: 11px;
+      }
+
+      .hero-wrap{
+        width: calc(100vw - 24px);
+        margin-top: 94px;
+      }
+
+      .hero-card{
+        min-height: auto;
+        border-radius: 20px;
+        padding: 32px 22px 24px 22px;
+      }
+
+      .hero-card::after{
+        border-radius: 19px;
+      }
+
+      .headline h1{
+        font-size: clamp(42px, 11vw, 58px);
+      }
+
+      .subtitle{
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .bottom-row{
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .dept-strip{
+        justify-content: flex-start;
+        gap: 18px;
+      }
+
+      .dept-item{
+        min-width: 60px;
+      }
+
+      .apply-btn{
+        min-width: 210px;
+        height: 62px;
+        font-size: 18px;
+      }
+
+      .tech-left,
+      .tech-right,
+      .tech-bottom,
+      .tech-hex{
+        display: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page">
+    <div class="global-vignette"></div>
 
-<div class="nav">
-<a class="active" href="#">Home</a>
-<a href="#">Departments</a>
-<a href="#">Apply</a>
-<a href="#">Discord</a>
-</div>
+    <div class="nav-shell">
+      <nav class="nav">
+        <a href="#" class="active">Home</a>
+        <a href="#departments">Departments</a>
+        <a href="#apply">Apply</a>
+        <a href="#discord">Discord</a>
+      </nav>
+    </div>
 
-<div class="hero">
+    <section class="hero-wrap">
+      <svg class="tech-left" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M5 190C82 120 121 118 164 154C206 190 250 194 355 86" stroke="rgba(255,255,255,0.42)" stroke-width="1.2"/>
+        <path d="M4 202C72 132 114 130 157 166C200 201 246 206 356 99" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+        <path d="M7 176C90 108 129 106 171 142C214 178 258 182 355 73" stroke="rgba(120,180,255,0.22)" stroke-width="1"/>
+      </svg>
 
-<h1>
-SOUTHERN<br>
-CALIFORNIA<br>
-ROLEPLAY
-</h1>
+      <svg class="tech-right" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M0 122C68 103 98 78 137 53C183 24 237 33 320 0" stroke="rgba(255,86,96,0.56)" stroke-width="1.3"/>
+        <path d="M20 170C81 146 121 122 152 89C176 63 220 38 290 11" stroke="rgba(90,160,255,0.32)" stroke-width="1"/>
+      </svg>
 
-<div class="subtitle">
-ULTRA-REALISTIC. IMMERSIVE. SPEC ROLEPLAY.
-</div>
+      <svg class="tech-bottom" viewBox="0 0 360 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M10 120C70 60 120 28 172 16C228 4 278 20 340 72" stroke="rgba(255,255,255,0.34)" stroke-width="1"/>
+        <path d="M35 131C90 82 132 55 183 42C232 30 274 42 326 87" stroke="rgba(255,255,255,0.17)" stroke-width="1"/>
+      </svg>
 
-<a class="cta" href="#">APPLY NOW</a>
+      <svg class="tech-hex" viewBox="0 0 260 190" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M130 12L216 56V135L130 178L44 135V56L130 12Z" stroke="rgba(255,255,255,0.46)" stroke-width="1"/>
+        <path d="M130 30L196 63V128L130 160L64 128V63L130 30Z" stroke="rgba(255,255,255,0.20)" stroke-width="1"/>
+      </svg>
 
-<div class="roles">
+      <div class="hero-card">
+        <div class="inner-blur"></div>
+        <div class="ambient-blue"></div>
+        <div class="ambient-red"></div>
 
-<div class="role">
-<svg class="icon police" viewBox="0 0 24 24">
-<path d="M12 2L19 5V10C19 15 16 18 12 20C8 18 5 15 5 10V5Z"/>
-</svg>
-Police
-</div>
+        <div class="hero-content">
+          <div class="headline">
+            <h1>
+              SOUTHERN<br>
+              CALIFORNIA<br>
+              ROLEPLAY
+            </h1>
 
-<div class="role">
-<svg class="icon fire" viewBox="0 0 24 24">
-<path d="M12 2C15 6 18 8 18 13A6 6 0 1 1 6 13C6 9 9 7 12 2Z"/>
-</svg>
-Fire
-</div>
+            <div class="subtitle">
+              ULTRA-REALISTIC. IMMERSIVE. SPEC ROLEPLAY.
+            </div>
+          </div>
 
-<div class="role">
-<svg class="icon civ" viewBox="0 0 24 24">
-<rect x="4" y="10" width="16" height="6" rx="2"/>
-<circle cx="7" cy="17" r="2"/>
-<circle cx="17" cy="17" r="2"/>
-</svg>
-Civilian
-</div>
+          <div class="bottom-row">
+            <a href="#apply" class="apply-btn">Apply Now</a>
 
-</div>
+            <div class="dept-strip" id="departments">
+              <div class="dept-item">
+                <img
+                  class="dept-logo"
+                  src="lapd-logo.png"
+                  alt="LAPD logo"
+                  onerror="this.style.display='none'; this.nextElementSibling.previousElementSibling.style.display='block';"
+                />
+                <svg class="civ-icon" style="display:none; color: var(--lapd);" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2L19 5V10C19 15 15.8 18.7 12 20C8.2 18.7 5 15 5 10V5L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                <div class="dept-label">LAPD</div>
+              </div>
 
-</div>
+              <div class="dept-item">
+                <img
+                  class="dept-logo"
+                  src="lasd-logo.png"
+                  alt="LASD logo"
+                  onerror="this.style.display='none'; this.nextElementSibling.previousElementSibling.style.display='block';"
+                />
+                <svg class="civ-icon" style="display:none; color: var(--lasd);" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2L19 5V10C19 15 15.8 18.7 12 20C8.2 18.7 5 15 5 10V5L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                <div class="dept-label">LASD</div>
+              </div>
 
+              <div class="dept-item">
+                <img
+                  class="dept-logo"
+                  src="chp-logo.png"
+                  alt="CHP logo"
+                  onerror="this.style.display='none'; this.nextElementSibling.previousElementSibling.style.display='block';"
+                />
+                <svg class="civ-icon" style="display:none; color: var(--chp);" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2L19 5V10C19 15 15.8 18.7 12 20C8.2 18.7 5 15 5 10V5L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                <div class="dept-label">CHP</div>
+              </div>
+
+              <div class="dept-item">
+                <img
+                  class="dept-logo"
+                  src="lafd-logo.png"
+                  alt="LAFD logo"
+                  onerror="this.style.display='none'; this.nextElementSibling.previousElementSibling.style.display='block';"
+                />
+                <svg class="civ-icon" style="display:none; color: var(--lafd);" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12.2 3C14.5 5.7 18 8.8 18 13C18 16.6 15.3 19 12 19C8.7 19 6 16.6 6 13C6 10.7 7.1 8.9 8.5 7.2C9.8 8.6 11 9.5 12.3 10.1C11.7 8.3 11.5 6.2 12.2 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                <div class="dept-label">LAFD</div>
+              </div>
+
+              <div class="dept-item">
+                <svg class="civ-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5 14L6.4 9.7C6.8 8.5 7.9 7.7 9.1 7.7H14.9C16.1 7.7 17.2 8.5 17.6 9.7L19 14M7 14H17M8.2 16.8H9.2M14.8 16.8H15.8M7.6 18.5C6.7 18.5 6 17.8 6 16.9V13.9C6 13 6.7 12.3 7.6 12.3H16.4C17.3 12.3 18 13 18 13.9V16.9C18 17.8 17.3 18.5 16.4 18.5H7.6Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="dept-label">CIVILIAN</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav a');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
