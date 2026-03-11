@@ -211,28 +211,33 @@
 
     .department-image{
       min-height: 0;
+      padding: 18px;
+      background: rgba(255,255,255,0.02);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 18px;
-      background: rgba(255,255,255,0.02);
     }
 
-    .image-slot{
+    .image-frame{
       width: 100%;
       height: 100%;
       border-radius: 12px;
-      border: 1px dashed rgba(255,255,255,0.16);
+      overflow: hidden;
       background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      color: var(--muted);
-      font-weight: 700;
-      padding: 16px;
       aspect-ratio: 1152 / 2048;
       max-height: 100%;
+    }
+
+    .showcase-image{
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
     }
 
     .department-copy{
@@ -381,79 +386,73 @@
 
       <article class="department-card lapd">
         <div class="department-image">
-          <div class="image-slot">LAPD Showcase Image<br>1152 × 2048</div>
+          <div class="image-frame">
+            <img src="lapd-showcase.png" alt="LAPD Showcase" class="showcase-image">
+          </div>
         </div>
         <div class="department-copy">
           <h2 class="department-name">LAPD</h2>
-          <p class="department-desc">
-            Los Angeles Police Department placeholder description. Add your finalized
-            department overview here.
-          </p>
+          <p class="department-desc">Los Angeles Police Department placeholder description.</p>
         </div>
       </article>
 
       <article class="department-card lasd">
         <div class="department-image">
-          <div class="image-slot">LASD Showcase Image<br>1152 × 2048</div>
+          <div class="image-frame">
+            <img src="lasd-showcase.png" alt="LASD Showcase" class="showcase-image">
+          </div>
         </div>
         <div class="department-copy">
           <h2 class="department-name">LASD</h2>
-          <p class="department-desc">
-            Los Angeles County Sheriff’s Department placeholder description. Add your
-            finalized department overview here.
-          </p>
+          <p class="department-desc">Los Angeles County Sheriff’s Department placeholder description.</p>
         </div>
       </article>
 
       <article class="department-card chp">
         <div class="department-image">
-          <div class="image-slot">CHP Showcase Image<br>1152 × 2048</div>
+          <div class="image-frame">
+            <img src="chp-showcase.png" alt="CHP Showcase" class="showcase-image">
+          </div>
         </div>
         <div class="department-copy">
           <h2 class="department-name">CHP</h2>
-          <p class="department-desc">
-            California Highway Patrol placeholder description. Add your finalized
-            department overview here.
-          </p>
+          <p class="department-desc">California Highway Patrol placeholder description.</p>
         </div>
       </article>
 
       <article class="department-card lafd">
         <div class="department-image">
-          <div class="image-slot">LAFD Showcase Image<br>1152 × 2048</div>
+          <div class="image-frame">
+            <img src="lafd-showcase.png" alt="LAFD Showcase" class="showcase-image">
+          </div>
         </div>
         <div class="department-copy">
           <h2 class="department-name">LAFD</h2>
-          <p class="department-desc">
-            Los Angeles Fire Department placeholder description. Add your finalized
-            department overview here.
-          </p>
+          <p class="department-desc">Los Angeles Fire Department placeholder description.</p>
         </div>
       </article>
 
       <article class="department-card doj">
         <div class="department-image">
-          <div class="image-slot">DOJ Showcase Image<br>1152 × 2048</div>
+          <div class="image-frame">
+            <img src="doj-showcase.png" alt="DOJ Showcase" class="showcase-image">
+          </div>
         </div>
         <div class="department-copy">
           <h2 class="department-name">DOJ</h2>
-          <p class="department-desc">
-            Department of Justice placeholder description. Add your finalized
-            department overview here.
-          </p>
+          <p class="department-desc">Department of Justice placeholder description.</p>
         </div>
       </article>
 
       <article class="department-card civilian">
         <div class="department-image">
-          <div class="image-slot">Civilian Showcase Image<br>1152 × 2048</div>
+          <div class="image-frame">
+            <img src="civilian-showcase.png" alt="Civilian Showcase" class="showcase-image">
+          </div>
         </div>
         <div class="department-copy">
           <h2 class="department-name">Civilian</h2>
-          <p class="department-desc">
-            Civilian Operations placeholder description. Add your finalized department
-            overview here.
-          </p>
+          <p class="department-desc">Civilian Operations placeholder description.</p>
         </div>
       </article>
 
