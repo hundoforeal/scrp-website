@@ -482,7 +482,7 @@
           <span>About Us</span>
         </a>
 
-        <a href="#departments" class="nav-link">
+        <a href="departments.html" class="nav-link">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M3 21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             <path d="M5 21V8L12 4L19 8V21" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -560,7 +560,7 @@
           </div>
         </section>
 
-        <section id="departments" class="section-box">
+        <section id="departments-preview" class="section-box">
           <div class="section-inner">
             <div class="section-title">Key Features or Offers</div>
 
@@ -636,6 +636,7 @@
 
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
+        if (link.getAttribute('href') === 'departments.html') return;
         navLinks.forEach(item => item.classList.remove('active'));
         link.classList.add('active');
       });
