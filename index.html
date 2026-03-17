@@ -234,6 +234,14 @@
       font-weight: 800;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .button-placeholder:hover{
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.24);
+      transform: translateY(-1px);
     }
 
     .hero-grid{
@@ -456,7 +464,7 @@
 
   <header class="site-header">
     <div class="nav-wrap">
-      <a href="#home" class="brand">
+      <a href="index.html" class="brand">
         <img src="logo.png" alt="SCRP Logo" class="brand-logo">
         <div class="brand-copy">
           <div class="brand-name">Southern California Roleplay</div>
@@ -515,14 +523,13 @@
             <div class="section-title">Hero Section</div>
             <div class="hero-grid">
               <div class="hero-left">
-                <div class="hero-kicker">Top Intro / Main Value</div>
-                <h1 class="hero-heading">Hero Section</h1>
+                <div class="hero-kicker">Southern California Roleplay</div>
+                <h1 class="hero-heading"></h1>
                 <p class="hero-sub">
-                  Short, powerful statement placeholder for what SCRP is, who it is for,
-                  and why someone should care.
+                  A precision-driven FiveM experience built on realism, structure, and immersive law enforcement and civilian roleplay.
                 </p>
                 <div>
-                  <span class="button-placeholder">CTA Button</span>
+                  <a href="#lead-magnet" class="button-placeholder">Apply Now</a>
                 </div>
               </div>
 
@@ -574,7 +581,7 @@
           </div>
         </section>
 
-        <section class="section-box">
+        <section id="lead-magnet" class="section-box">
           <div class="section-inner">
             <div class="section-title">Lead Magnet / Primary CTA Section</div>
 
