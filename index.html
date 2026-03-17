@@ -228,14 +228,15 @@
       height: 50px;
       padding: 0 20px;
       border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border-strong);
-      color: var(--text);
+      background: #2f6bff;
+      border: 1px solid rgba(47,107,255,0.6);
+      color: #ffffff;
       font-weight: 800;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 0 rgba(47,107,255,0);
     }
 
     .button-placeholder:hover{
@@ -458,6 +459,17 @@
         padding: 0 16px;
       }
     }
+#home{
+  transition: all 0.25s ease;
+}
+
+#home:hover{
+  box-shadow:
+    0 0 25px rgba(255,140,40,0.7),
+    0 0 60px rgba(255,140,40,0.4),
+    0 0 120px rgba(255,140,40,0.2);
+  border: 1px solid rgba(255,140,40,0.9);
+}
   </style>
 </head>
 <body>
@@ -520,7 +532,6 @@
 
         <section id="home" class="section-box">
           <div class="section-inner">
-            <div class="section-title">Hero Section</div>
             <div class="hero-grid">
               <div class="hero-left">
                 <div class="hero-kicker">Southern California Roleplay</div>
@@ -534,7 +545,6 @@
               </div>
 
               <div class="hero-right">
-                <div class="mini-title">Visual / Hero Media</div>
                 <div class="placeholder hero-media">Hero Image / Video / Graphic</div>
                 <div class="line-stack">
                   <div class="line lg"></div>
