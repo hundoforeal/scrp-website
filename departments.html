@@ -242,13 +242,14 @@
 
     .department-copy{
       border-top: 1px solid rgba(255,255,255,0.12);
-      padding: 16px 14px 16px;
+      padding: 12px 12px 12px;
       background: rgba(255,255,255,0.018);
-      min-height: 140px;
+      min-height: 0;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      gap: 8px;
+      gap: 6px;
     }
 
     .department-name{
@@ -261,9 +262,11 @@
 
     .department-desc{
       color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.4;
+      font-size: 0.76rem;
+      line-height: 1.32;
       overflow-wrap: break-word;
+      word-break: break-word;
+      flex: 1;
     }
 
     .lapd .department-name{ color: var(--lapd); }
